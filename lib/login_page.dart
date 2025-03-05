@@ -5,7 +5,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  int radioValue = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +14,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool rememberMe = false; // Checkbox durumu için değişken
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,24 +65,34 @@ class SignInPage extends StatelessWidget {
                   suffixIcon: Icon(Icons.visibility),
                 ),
               ),
-              
               SizedBox(height: 10),
-              Row(children: [
-                Checkbox(value: false, onChanged: (value) {}),
-                Text("Remember me"),
-                Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("Forgot Password?",
-                      style: TextStyle(color: Colors.deepPurple)),
-                )
-              ]),
+              Row(
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        rememberMe = value ?? false; // Değeri güncelle
+                      });
+                    },
+                  ),
+                  Text("Remember me"),
+                  Spacer(),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(color: Colors.deepPurple),
+                    ),
+                  )
+                ],
+              ),
               SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {},
                 icon: Icon(
                   Icons.g_mobiledata,
-                  color: Colors.red,
+                  color: Colors.black,
                   size: 28,
                 ),
                 label: Text("Continue with Google"),
@@ -101,7 +117,9 @@ class SignInPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print("Remember Me: $rememberMe"); // Konsolda durumu yazdır
+                },
                 child: Text("Sign in"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
